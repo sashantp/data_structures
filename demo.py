@@ -12,7 +12,7 @@ checkboxes = ['turbo','power','energy','exorbitant']
 checked = set()
 unchecked = set()
 
-bu_names = {'bigrock':1,'resellerclub':1,'logicboxes':0}
+bu_names = {'bigrock':1,'resellerclub':1,'logicboxes':0,'supportnation':0}
 
 
 for k,v in bu_names.iteritems():
@@ -34,8 +34,8 @@ for k,v in bu_names.iteritems():
 # checked.sort()
 # unchecked.sort()
 
-print ''.join(checked)
-print ''.join(unchecked)
+print '_'.join(checked)
+print '_'.join(unchecked)
 
 
 			
