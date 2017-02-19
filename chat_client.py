@@ -13,9 +13,11 @@ try :
 	while 1 :
 
 		user_input = raw_input("Please type message or Enter to close :")
-	 	if len(user_input) == 0 : break
+	 	if len(user_input) == 0 : 
+	 		client.close()
+	 		break
 		if len(user_input) > 0 :
-			client.sendall(user_input)
+			client.send(user_input)
 			data = client.recv(1024)
 			print "chat" , data
 
