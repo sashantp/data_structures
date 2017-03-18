@@ -30,7 +30,9 @@ try:
 			if sock == server : # new connection request , get username 
 				conn , addr = server.accept()
 				username = conn.recv(4096)
+
 				if len(username) > 0 and username not in CLIENT_TO_SOCKET_MAP :
+				
 					SOCKET_LIST.append(conn)
 					CLIENT_TO_SOCKET_MAP[username] = conn
 					peername,port = conn.getpeername()
@@ -38,18 +40,23 @@ try:
 					IP_PORT_TO_USER_MAP[ip_port] = username
 					print " Connected : " , username
 					conn.send("success")
+				
 				else:
 					conn.send("User already present , please choose another name ")
 					conn.close()
 					continue
 
 			else: # added client
+				
 				try:
+
 					data = sock.recv(1024)
 					peername,port = sock.getpeername()
 					ip_port = peername+"_"+str(port)
 					print "user " , IP_PORT_TO_USER_MAP[ip_port] , " " , data
+					
 					if len(data) > 0 :
+					
 						for user,current_socket in CLIENT_TO_SOCKET_MAP.iteritems() :
 							if current_socket != server and current_socket == sock :
 								try:
@@ -61,11 +68,14 @@ try:
 										SOCKET_LIST.remove(current_socket)
 									print " current_socket ",msg
 					else:
+					
 						SOCKET_LIST.remove(sock)
 						del CLIENT_TO_SOCKET_MAP[IP_PORT_TO_USER_MAP[ip_port]]
 						del IP_PORT_TO_USER_MAP[ip_port]
 						sock.close()
+				
 				except socket.error as msg:	
+				
 					SOCKET_LIST.remove(sock)
 					del CLIENT_TO_SOCKET_MAP[IP_PORT_TO_USER_MAP[ip_port]]
 					del IP_PORT_TO_USER_MAP[ip_port]
@@ -74,6 +84,7 @@ try:
 					print " Error receiving " , msg
 					continue
 					
-	server.close()				
+	server.close()
+					
 except socket.error as msg:
 	print " Error outer " , msg
